@@ -56,3 +56,6 @@ duration_100 =  replacing_min.where(replacing_min['duration_100(duration)']>100)
 
 
 # 7.List movies played by “Kareena Kapoor” ?
+
+split_cast=df.select(df.cast,df.title).withColumn('cast',F.explode(F.split('cast',',')))
+kareena = split_cast.filter(split_cast['cast']=='Kareena Kapoor').show()
