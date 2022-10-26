@@ -14,6 +14,11 @@ print("Total PG-13 Titles:",pg13_count.count())
      #OUTPUT IN CSV
 pg13_count.repartition(1).write.csv('PG-13',header=True, mode='overwrite')
 
+     #OP Saved in Postgresql
+pg13_count.write.format('jdbc').options(url='jdbc:postgresql://localhost:5432/postgres', driver='org.postgresql.Driver',
+                                   dbtable='PG_13', user='fusemachines', password='hello123').mode('overwrite').save()
+
+
 
 # Q2. How many titles an actor or actress appeared in?
 split_cast=df.select(df.cast).withColumn('cast',F.explode(F.split('cast',',')))
@@ -29,6 +34,10 @@ total_cast_app.show(10)
     #OUTPUT IN CSV
 total_cast_app.repartition(1).write.csv('Total_Cast_apperance',header=True, mode='overwrite')
 
+    #OP Saved in Postgresql
+total_cast_app.write.format('jdbc').options(url='jdbc:postgresql://localhost:5432/postgres', driver='org.postgresql.Driver',
+                                   dbtable='Actor_apperance', user='fusemachines', password='hello123').mode('overwrite').save()
+
 
 # 3. How many titles has a director has filmed?
 split_director = df.select(df.director).withColumn('director',F.explode(F.split('director',',')))
@@ -43,6 +52,9 @@ total_director_count.show()
         #OUTPUT IN CSV
 total_director_count.repartition(1).write.csv('Total_Director_Count',header=True, mode='overwrite')
 
+    #OP Saved in Postgresql
+total_director_count.write.format('jdbc').options(url='jdbc:postgresql://localhost:5432/postgres', driver='org.postgresql.Driver',
+                                   dbtable='Total_Director_Count', user='fusemachines', password='hello123').mode('overwrite').save()
 
 
 # 4. What content is available in different countries?
@@ -52,6 +64,9 @@ content.show()
       #OUTPUT IN CSV
 content.repartition(1).write.csv('Content',header=True, mode='overwrite')
 
+      #OP Saved in Postgresql
+content.write.format('jdbc').options(url='jdbc:postgresql://localhost:5432/postgres', driver='org.postgresql.Driver',
+                                   dbtable='Content_according_country', user='fusemachines', password='hello123').mode('overwrite').save()
 
 
 # 5. How many movies were released in 2008?
@@ -78,6 +93,10 @@ duration_100.show()
       #OUTPUT IN CSV
 duration_100.repartition(1).write.csv('Duration>100',header=True, mode='overwrite')
 
+      #OP Saved in Postgresql
+duration_100.write.format('jdbc').options(url='jdbc:postgresql://localhost:5432/postgres', driver='org.postgresql.Driver',
+                      dbtable='Duration_100', user='fusemachines', password='hello123').mode('overwrite').save()
+
 
 
 # 7.List movies played by “Kareena Kapoor” ?
@@ -87,4 +106,9 @@ kareena_movies.show()
 
     #OUTPUT IN CSV
 kareena_movies.repartition(1).write.csv('Kareena_movies',header=True, mode='overwrite')
+
+      #OP Saved in Postgresql
+kareena_movies.write.format('jdbc').options(url='jdbc:postgresql://localhost:5432/postgres', driver='org.postgresql.Driver',
+                                   dbtable='Kareena_movies', user='fusemachines', password='hello123').mode('overwrite').save()
+
 
